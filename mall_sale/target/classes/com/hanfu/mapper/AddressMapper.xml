@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hanfu.mapper.AddressMapper">
+
+	<select id="select_addresses_by_id" parameterType="int"
+		resultType="com.hanfu.bean.T_MALL_ADDRESS">
+		select * from t_mall_address where id = #{address_id}
+	</select>
+
+	<insert id="insert_address" parameterType="com.hanfu.bean.T_MALL_ADDRESS">
+
+		insert into
+		t_mall_address
+		(
+		yh_dz,
+		yh_id,
+		shjr,
+		lxfsh
+		)
+		values
+		(
+		#{yh_dz},
+		#{yh_id},
+		#{shjr},
+		#{lxfsh}
+		)
+	</insert>
+
+	<select id="select_addresses_by_user_id" parameterType="com.hanfu.bean.T_MALL_USER_ACCOUNT"
+		resultType="com.hanfu.bean.T_MALL_ADDRESS">
+		select * from t_mall_address where yh_id = #{id}
+	</select>
+</mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hanfu.mapper.RegisterMapper">
+	
+	<insert id="register_user" parameterType="com.hanfu.bean.T_MALL_USER_ACCOUNT">
+		INSERT INTO 
+		`t_mall_user_account`(yh_mch, yh_nch, yh_mm, yh_xm, yh_shjh, yh_yx)
+		VALUES
+		(#{yh_mch}, #{yh_nch}, #{yh_mm}, #{yh_xm}, #{yh_shjh}, #{yh_yx})
+	</insert>
+</mapper>

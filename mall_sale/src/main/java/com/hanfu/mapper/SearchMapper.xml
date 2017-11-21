@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hanfu.mapper.SearchMapper">
+	<select id="select_search_class" resultMap="select_search_class_map"
+		parameterType="int">
+		select sku.id as sku_id,spu.id as spu_id,tm.id as tm_id
+		, sku.*,spu.*,tm.* from
+		t_mall_sku sku ,t_mall_product
+		spu,t_mall_trade_mark tm
+		WHERE
+		sku.shp_id = spu.Id AND
+		spu.pp_id = tm.Id
+		and
+		spu.flbh2 =
+		#{class_2_id}
+	</select>
+	
+	<select id="select_by_attr" resultMap="select_search_class_map"
+		parameterType="Map">
+		SELECT
+		sku.id as sku_id ,spu.id as spu_id ,sku.*,spu.*
+		FROM
+		t_mall_sku sku,
+		t_mall_product spu,
+		t_mall_trade_mark tm,
+		t_mall_tm_class tmc
+		WHERE
+		sku.shp_id = spu.id
+		and spu.flbh1 =
+		tmc.flbh1
+		and tmc.pp_id = tm.Id
+		and spu.pp_id = tm.Id
+		AND spu.flbh2 =
+		#{class_2_id}
+		${sql}
+		${order}
+	</select>
+
+	<resultMap type="com.hanfu.bean.OBJECT_T_MALL_SKU_CLASS"
+		id="select_search_class_map" autoMapping="true">
+		<result property="id" column="sku_id" />
+		<association property="spu" javaType="com.hanfu.bean.T_MALL_PRODUCT"
+			autoMapping="true">
+			<result property="id" column="spu_id" />
+		</association>
+		<association property="tm" javaType="com.hanfu.bean.T_MALL_TRADE_MARK"
+			autoMapping="true">
+			<result property="id" column="tm_id" />
+		</association>
+	</resultMap>
+	
+	<select id="select_sku_detail" parameterType="Map"
+		resultMap="select_sku_detail_map">
+		select sku.id as
+		sku_id,spu.id as spu_id ,img.id as img_id,
+		sku.*,spu.*,img.*,CONCAT(val.shxzh,val.shxzh_mch) as
+		shxzh_mch,attr.shxm_mch
+		from
+		t_mall_sku sku,
+		t_mall_product spu,
+		t_mall_sku_attr_value av,
+		t_mall_attr attr,
+		t_mall_value val,
+		t_mall_product_image img
+		where
+		sku.shp_id = spu.Id AND
+		spu.Id =
+		img.shp_id AND
+		sku.Id = av.sku_id and
+		av.shxm_id = attr.Id AND
+		av.shxzh_id = val.Id AND
+		sku.Id = #{sku_id} and spu.Id = #{spu_id}
+	</select>
+
+	<resultMap type="com.hanfu.bean.OBJECT_T_MALL_DETAIL_SKU"
+		id="select_sku_detail_map" autoMapping="true">
+		<result column="sku_id" property="id" />
+		<association javaType="com.hanfu.bean.T_MALL_PRODUCT"
+			property="spu" autoMapping="true">
+			<result column="spu_id" property="id" />
+		</association>
+		<collection ofType="com.hanfu.bean.T_MALL_PRODUCT_IMAGE"
+			property="list_image" autoMapping="true">
+			<result column="img_id" property="id" />
+		</collection>
+		<collection ofType="com.hanfu.bean.OBJECT_T_MALL_ATTR_NAME"
+			property="list_av_name" autoMapping="true">
+		</collection>
+	</resultMap>
+	
+	<select id="select_list_sku_by_spu_id" parameterType="int"
+		resultType="com.hanfu.bean.T_MALL_SKU">
+		select * from t_mall_sku where shp_id = #{spu_id}
+	</select>
+	
+</mapper>

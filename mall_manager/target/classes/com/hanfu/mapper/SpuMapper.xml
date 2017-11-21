@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hanfu.mapper.SpuMapper">
+
+	<select id="select_flmch2_by_spuId" parameterType="int"
+		resultType="String">
+		SELECT flmch2 FROM t_mall_class_2 WHERE Id = #{id}
+	</select>
+
+	<select id="select_spu_test" resultType="com.hanfu.bean.T_MALL_PRODUCT">
+		select * from
+		t_mall_product
+	</select>
+
+	<insert useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+		id="insert_spu" parameterType="com.hanfu.bean.T_MALL_PRODUCT">
+		insert into t_mall_product
+		(
+		shp_mch,
+		shp_tp,
+		flbh1,
+		flbh2,
+		pp_id,
+		shp_msh
+		)
+		values
+		(
+		#{shp_mch},
+		#{shp_tp},
+		#{flbh1},
+		#{flbh2},
+		#{pp_id},
+		#{shp_msh}
+		)
+	</insert>
+
+	<insert id="insert_spu_image">
+
+		insert into t_mall_product_image(
+		shp_id,url
+		)
+		values
+		<foreach collection="list_image_name" item="image" separator=",">
+			(#{spu.id},#{image})
+		</foreach>
+	</insert>
+
+</mapper>

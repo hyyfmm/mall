@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hanfu.mapper.AttrMapper">
+	<select id="select_attr_list_by_class_2" parameterType="int"
+		resultMap="select_attr_list_by_class_2_map">
+		select attr.id as attr_id,val.id as value_id,attr.*,val.*
+		from
+		t_mall_attr attr,
+		t_mall_value val
+		where
+		attr.Id =
+		val.shxm_id
+		and
+		attr.flbh2 = #{class_2_id}
+	</select>
+
+	<resultMap type="com.hanfu.bean.OBJECT_T_MALL_ATTR" id="select_attr_list_by_class_2_map"
+		autoMapping="true">
+		<result column="attr_id" property="id" />
+		<collection property="list_value" ofType="com.hanfu.bean.T_MALL_VALUE"
+			autoMapping="true">
+			<result column="value_id" property="id" />
+		</collection>
+	</resultMap>
+</mapper>
