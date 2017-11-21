@@ -1,5 +1,5 @@
 # mall
-基于ssm的hanfu商城，用maven
+基于ssm的hanfu商城，用maven搭建
 
 1、首先在mysql中执行mall.sql文件，生成数据库
 2、mall_json用于生成js文件
